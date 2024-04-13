@@ -1,25 +1,27 @@
 {
-	"name": "poetry3-poetry-pyenv",
-	"build": {
-		"dockerfile": "Dockerfile"
-	},
+  "name": "Python 3",
+  "forwardPorts": [8000],
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      // Update 'VARIANT' to pick a Python version: 3, 3.10, 3.9, 3.8, 3.7, 3.6
+      // Append -bullseye or -buster to pin to an OS version.
+      // Use -bullseye variants on local on arm64/Apple Silicon.
+      "VARIANT": "3.6",
+      // Options
+      "NODE_VERSION": "none"
+    }
+  },
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
 
-	// 👇 Features to add to the Dev Container. More info: https://containers.dev/implementors/features.
-	// "features": {},
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "pip3 install --user -r requirements.txt",
 
-	// 👇 Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-
-	// 👇 Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "",
-
-	// 👇 Configure tool-specific properties.
-	"customizations": {
-        "vscode": {
-            "extensions":["ms-python.python", "njpwerner.autodocstring"]
-            }
-        }
-
-	// 👇 Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+  // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "vscode",
+  "features": {
+    "azure-cli": "latest"
+  }
 }
